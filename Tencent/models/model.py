@@ -15,7 +15,7 @@ from elasticsearch_dsl.analysis import CustomAnalyzer as _CustomAnalyzer
 class CustomAnalyzer(_CustomAnalyzer):
     def get_analysis_definition(self):
         return {}
-#     lowercase 忽略大小写 使搜索更加准确
+#     lowercase 忽略大小写 使搜索更加准确1
 ik_analyzer = CustomAnalyzer('ik_max_word',filter=['lowercase'])
 class Article(DocType):
     # 文章类型
