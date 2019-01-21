@@ -20,10 +20,12 @@ class JianshuSpider(CrawlSpider):
         content= response.xpath("//div[@class='show-content']").get()
         pub_time= response.xpath("//span[@class='publish-time']/text()").get().replace("*","")
         article_id=response.url.split("?")[0].split("p/")[1]
-        print(pub_time)
-        #i['domain_id'] = response.xpath('//input[@id="sid"]/@value').extract()
-        #i['name'] = response.xpath('//div[@id="name"]').extract()
-        #i['description'] = response.xpath('//div[@id="description"]').extract()
+        word_count= response.xpath("//span[@class='wordage']/text()").get()
+        comment_count= response.xpath("//span[@class='comments-count']/text()").get()
+        read_count= response.xpath("//span[@class='views-count']/text()").get()
+        like_count= response.xpath("//span[@class='likes-count']/text()").get()
         print(self.count)
-        item =ArticleItem(title=title,avatar=avatar,author=author,pub_time=pub_time,article_id=article_id,content=content,origin_url=response.url)
+        item =ArticleItem(title=title,avatar=avatar,author=author,pub_time=pub_time,article_id=article_id,
+                          word_count=word_count,comment_count=comment_count,
+                          read_count=read_count,like_count=like_count,content=content,origin_url=response.url)
         yield item

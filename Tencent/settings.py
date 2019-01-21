@@ -60,6 +60,7 @@ DEFAULT_REQUEST_HEADERS = {
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
    'Tencent.middlewares.UserAgentDownLoadMiddleware': 543,
+   'Tencent.middlewares.SeleniumDownloadMiddleware': 500,
 }
 
 # Enable or disable extensions
@@ -72,12 +73,12 @@ DOWNLOADER_MIDDLEWARES = {
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     # 'Tencent.pipelines.MinePipeline': 300,
-   # 'Tencent.pipelines.HighlevelPipeline': 300,
+   'Tencent.pipelines.HighlevelPipeline': 300,
   # 'Tencent.pipelines.BMW5Pipeline': 200,
   #  'Tencent.pipelines.mysqlPoolPipline': 200,
   #   'Tencent.pipelines.JobboleImagePipeline1': 2,
   #   'Tencent.pipelines.jobbolemysqlPoolPipline': 20,
-    'Tencent.pipelines.ElasticSearchPipeline': 20,
+  #   'Tencent.pipelines.ElasticSearchPipeline': 20,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

@@ -55,9 +55,12 @@ class ArticleItem(scrapy.Item):
     author = scrapy.Field()
     pub_time = scrapy.Field()
     article_id = scrapy.Field()
+    word_count = scrapy.Field()
+    comment_count = scrapy.Field()
+    read_count = scrapy.Field()
+    like_count = scrapy.Field()
     content = scrapy.Field()
     origin_url = scrapy.Field()
-
 class KugouMusicItem(scrapy.Item):
     category = scrapy.Field()
     url = scrapy.Field()

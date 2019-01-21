@@ -79,7 +79,7 @@ class HighlevelPipeline(object):
     def __init__(self):
         # self.fp = open("D:\\spark-input\\kugouMusic.json", "wb")
         # self.fp = open("data\\jobbole.json", "wb")
-        self.fp = codecs.open('data\\article.json', 'w', encoding="utf-8")
+        self.fp = codecs.open('data\\jiannhu.json', 'w', encoding="utf-8")
         self.exporter = JsonLinesItemExporter(self.fp,ensure_ascii=False,encoding="utf-8")
     def open_spider(self, spider):
         print("爬虫开始了")

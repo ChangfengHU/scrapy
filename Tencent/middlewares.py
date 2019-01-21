@@ -102,3 +102,31 @@ class UserAgentDownLoadMiddleware(object):
         user_agent=random.choice(self.user_agent)
         print("本次的user_agent"+user_agent)
         request.headers['User-Agent']=user_agent
+
+
+
+
+from  selenium import webdriver
+import time
+from scrapy.http.response.html import HtmlResponse
+class SeleniumDownloadMiddleware(object):
+    def __init__(self):
+        self.drive = webdriver.Chrome(executable_path="D:\\code\\scrapy\\Tencent\\selenium爬虫\\chromedriver.exe")
+    def process_request(self,request,spider):
+        if spider.name == "jianshu":
+            self.drive.get(request.url)
+            time.sleep(1)
+            try:
+                while True:
+                    showMore=self.drive.find_element_by_class_name("show-more")
+                    showMore.click()
+                    time.sleep(0.3)
+                    if not showMore:
+                        break
+            except:
+                pass
+            source=self.drive.page_source
+            response=HtmlResponse(self.drive.current_url,body=source,request=request,encoding="utf-8")
+            return response
+  # def __init__(self, url, status=200, headers=None, body=b'', flags=None, request=None):
+  #       self.headers = Headers(headers or {})

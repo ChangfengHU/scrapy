@@ -24,10 +24,10 @@ class KugouSpider(CrawlSpider):
     def parse_detail(self, response):
         self.count=self.count+1;
         print(response.url)
-        url=response.xpath("//audio[@id='myAudio']").get()
-        url1 = response.xpath("//div[@class='author']/a[@class='avatar']/img/@src").get()
+        url=response.xpath("//audio[@id='myAudio']/@src").get()
+        avatar = response.xpath("//div[@class='author']/a[@class='avatar']/img/@src").get()
         print(url)
-        item = KugouMusicItem(category=response.url,url=url)
+        item = KugouMusicItem(category=avatar,url=url)
         #i['domain_id'] = response.xpath('//input[@id="sid"]/@value').extract()
         #i['name'] = response.xpath('//div[@id="name"]').extract()
         #i['description'] = response.xpath('//div[@id="description"]').extract()
