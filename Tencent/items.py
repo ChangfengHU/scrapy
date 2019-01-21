@@ -7,7 +7,7 @@
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import MapCompose, TakeFirst, Join
 from Tencent.settings import SQL_DATETIME_FORMAT, SQL_DATE_FORMAT
-from Tencent.models import model
+from Tencent.models.model import Article
 from w3lib.html import remove_tags
 from w3lib.html import remove_tags
 import scrapy
@@ -104,7 +104,27 @@ def remove_comment_tags(value):
         return ""
     else:
         return value
+#连接es
+from elasticsearch_dsl.connections import connections
+# es=connections.create_connection(Article._doc_type.using)
+es=connections.create_connection(hosts=["127.0.0.1"], timeout=20)
 
+def gen_suggest(index,info_tople):
+    #根据字符串生成搜索建议 数组
+    used_words=()
+    suggests =[]
+    for text,weight in info_tople :
+        if text:
+            #调用es的analyze接口分析字符串
+            # words=es.indices.analyze(index=index,analyzer="ik_max_word",params={'filter':["lowercase"]},body=text)
+            words = es.indices.analyze(index=index, body={'text': text, 'analyzer': "ik_max_word"},params={'filter': ["lowercase"]})
+            token_list=set(r["token"] for  r in words["tokens"] if len(r["token"])>1)
+            new_words=token_list
+        else:
+            new_words=set()
+        if  new_words:
+            suggests.append({"input":list(new_words),"weight":weight})
+    return suggests
 class JobBoleArticleItem(scrapy.Item):
     title = scrapy.Field(
         input_processor=MapCompose(lambda x:x+"_scrapy"),
@@ -134,6 +154,8 @@ class JobBoleArticleItem(scrapy.Item):
     )
     content = scrapy.Field()
 
+
+
     def get_insert_sql(self):
         insert_sql = """
             insert into jobbole_article(title, url,url_object_id, create_date, fav_nums, front_image_url, front_image_path,
@@ -154,7 +176,7 @@ class JobBoleArticleItem(scrapy.Item):
         return insert_sql, params
 
     def save_to_es(self):
-        article = model.Article()
+        article = Article()
         article.title = self["title"]
         article.create_date = self["create_date"]
         #内容去标签remove_tags
@@ -168,4 +190,5 @@ class JobBoleArticleItem(scrapy.Item):
         article.url = self["url"]
         article.tags = self["tags"]
         article.id = self["url_object_id"]
+        article.suggest=gen_suggest("jobbole",((article.title,10),(article.tags,7)))
         article.save()

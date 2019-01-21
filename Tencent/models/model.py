@@ -45,7 +45,6 @@ class Article(DocType):
     class Index:
         name = 'jobbole'
         doc_type = 'article'
-    feedback_type = Text()
 
 connections.create_connection(hosts=["127.0.0.1"], timeout=20)
 
