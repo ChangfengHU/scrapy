@@ -7,7 +7,8 @@
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import MapCompose, TakeFirst, Join
 from Tencent.settings import SQL_DATETIME_FORMAT, SQL_DATE_FORMAT
-from Tencent.models.model import Article
+from Tencent.model import  Article
+
 from w3lib.html import remove_tags
 from w3lib.html import remove_tags
 import scrapy
@@ -130,7 +131,8 @@ def gen_suggest(index,info_tople):
     return suggests
 class JobBoleArticleItem(scrapy.Item):
     title = scrapy.Field(
-        input_processor=MapCompose(lambda x:x+"_scrapy"),
+        # input_processor=MapCompose(lambda x:x+"_scrapy"),
+        input_processor=MapCompose(),
     )
     create_date = scrapy.Field(
         input_processor=MapCompose(date_convert),

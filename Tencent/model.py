@@ -46,8 +46,13 @@ class Article(DocType):
         name = 'jobbole'
         doc_type = 'article'
 
-connections.create_connection(hosts=["47.97.247.78"], http_auth=('elastic', '36yes58no!@#'), timeout=20)
+# connections.create_connection(hosts=["172.16.191.79"], timeout=20)
 
+connections.create_connection(
+        hosts=["47.97.247.78"],
+        http_auth=('elastic', '36yes58no!@#'),
+        port=9200,
+        timeout=5000)
 # doc = Article(title="你好",url_object_id='121312',praise_nums=1221)
 # doc.save()
 

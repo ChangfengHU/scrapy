@@ -294,19 +294,19 @@ from w3lib.html import remove_tags
 class ElasticSearchPipeline(object):
     # 写入数据到es中
     def process_item(self, item, spider):
-        # article = model.Article()
-        # article.title = item["title"]
-        # article.create_date = item["create_date"]
-        # article.content = remove_tags(item["content"]).strip().replace("\r\n","").replace("\t","")
-        # article.front_image_url = item["front_image_url"]
-        # if "front_image_path" in item:
-        #     article.front_image_path = item["front_image_path"]
-        # article.praise_nums = item["praise_nums"]
-        # article.comment_nums = item["comment_nums"]
-        # article.fav_nums = item["fav_nums"]
-        # article.url = item["url"]
-        # article.tags = item["tags"]
-        # article.id = item["url_object_id"]
-        # article.save()
-        item.save_to_es()
+        article = model.Article()
+        article.title = item["title"]
+        article.create_date = item["create_date"]
+        article.content = remove_tags(item["content"]).strip().replace("\r\n","").replace("\t","")
+        article.front_image_url = item["front_image_url"]
+        if "front_image_path" in item:
+            article.front_image_path = item["front_image_path"]
+        article.praise_nums = item["praise_nums"]
+        article.comment_nums = item["comment_nums"]
+        article.fav_nums = item["fav_nums"]
+        article.url = item["url"]
+        article.tags = item["tags"]
+        article.id = item["url_object_id"]
+        article.save()
+        # item.save_to_es()
         return item

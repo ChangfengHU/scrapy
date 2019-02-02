@@ -8,13 +8,13 @@ from scrapy.loader import ItemLoader
 import time
 
 from Tencent.items import JobBoleArticleItem,ArticleItemLoader
-from Tencent.untils.common import get_md5
+from Tencent.common import get_md5
 
 
 class JobboleSpider(scrapy.Spider):
     name = "jobbole"
-    allowed_domains = ["python.jobbole.com"]
-    start_urls = ['http://python.jobbole.com/all-posts/']
+    allowed_domains = ["blog.jobbole.com"]
+    start_urls = ['http://blog.jobbole.com/all-posts/']
     crawlDataCount=0
     def parse(self, response):
         """
@@ -37,9 +37,9 @@ class JobboleSpider(scrapy.Spider):
     def parse_detail(self, response):
         self.crawlDataCount+=1
         print(self.crawlDataCount)
-        if self.crawlDataCount>50:
-            self.crawler.engine.close_spider(self, 'cookie失效关闭爬虫')
-            return
+        # if self.crawlDataCount>50:
+        #     self.crawler.engine.close_spider(self, 'cookie失效关闭爬虫')
+        #     return
         # article_item = JobBoleArticleItem()
         # #提取文章的具体字段
         # # 文章标题
